@@ -1,0 +1,31 @@
+* {
+  outline: none;
+}
+
+body {
+  @apply
+    tw-flex
+    tw-bg-white
+    dark:tw-bg-ink/darkest
+  ;
+  background: linear-gradient(107.48deg,#ACCBEE -62.67%,#E7F0FD 182.63%);
+}
+
+html[data-mode="dark"] body {
+  background: none;
+  @apply tw-bg-ink/darkest;
+}
+
+#app {
+  @apply
+    tw-flex
+    tw-flex-col
+    tw-flex-1
+  ;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+input {
+  outline: none;
+}
