@@ -20,7 +20,10 @@ export default {
     }
   },
   actions: {
-    async getTabs ({ state }) {
+    async getTabs ({ state, rootState }) {
+      // При гостевом доступе стрим не показываем
+      if (rootState.auth?.user?.isGuest) return
+
       state.tabs = await Api.get(`/${API_VERSION}/tabs`).then(res => res?.data || [])
     }
   }

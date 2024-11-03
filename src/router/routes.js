@@ -1,5 +1,5 @@
 import auth from '@/views/auth.vue'
-import guestAuth from '@/views/guest-auth.vue'
+// import guestAuth from '@/views/guest-auth.vue'
 import home from '@/views/home.vue'
 
 export default [
@@ -18,13 +18,13 @@ export default [
     meta: {
       isProtected: true
     }
-  },
-  {
-    path: '/kviz',
-    name: 'guest-auth',
-    component: guestAuth,
-    meta: {
-      isProtected: false
-    }
   }
+  // {
+  //   path: '/kviz',
+  //   name: 'guest-auth',
+  //   component: guestAuth,
+  //   meta: {
+  //     isProtected: false
+  //   }
+  // }
 ]
