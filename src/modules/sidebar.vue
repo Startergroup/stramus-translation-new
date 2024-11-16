@@ -103,6 +103,7 @@ export default {
       store.commit('translation/setActiveTabId', id)
       await store.dispatch('votes/getVotes')
       await store.dispatch('schedule/getScheduleBySectionId', id)
+      store.commit('schedule/setVisibleState', true)
       emit('update:model-value', false)
     }
 

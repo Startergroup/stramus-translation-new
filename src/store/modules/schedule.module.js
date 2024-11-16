@@ -4,7 +4,13 @@ import { API_VERSION } from '@/api/config'
 export default {
   namespaced: true,
   state: {
-    schedule: {}
+    schedule: {},
+    isVisible: false
+  },
+  mutations: {
+    setVisibleState (state, value) {
+      state.isVisible = value
+    }
   },
   actions: {
     async getScheduleBySectionId ({ state }, id) {

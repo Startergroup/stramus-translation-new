@@ -41,6 +41,22 @@
           fill="transparent"
         />
       </button-primary>
+
+      <button-primary
+        v-if="!isEmpty(schedule)"
+        rounded
+        severity="primary"
+        class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
+        @click="openSchedule"
+      >
+        <icon-base
+          :icon="icons['fi-rr-calendar']"
+          :width="15"
+          :height="15"
+          :view-box-size="[15, 15]"
+          fill="transparent"
+        />
+      </button-primary>
     </div>
   </div>
 </template>
@@ -68,6 +84,7 @@ export default {
 
     const votes = computed(() => store.state.votes.votes)
     const section = computed(() => store.getters['translation/getActiveTab'])
+    const schedule = computed(() => store.state.schedule.schedule)
 
     const { open: openQuestionModal } = useModal({
       component: AskQuestionModal
@@ -76,12 +93,18 @@ export default {
       component: VotesModal
     })
 
+    const openSchedule = () => {
+      store.commit('schedule/setVisibleState', true)
+    }
+
     return {
       icons,
       isEmpty,
       openQuestionModal,
+      openSchedule,
       openVoteModal,
       section,
+      schedule,
       switchCinemaMode: (value) => store.commit('settings/switchCinemaMode', value),
       votes
     }

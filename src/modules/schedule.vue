@@ -1,15 +1,31 @@
 <template>
   <transition-fade :duration="350">
     <div
-      v-if="!isEmpty(schedule) && isTheSameDate"
-      class="tw-column-start tw-w-full lg:tw-w-[320px] tw-px-4 tw-py-6 tw-gap-10 tw-rounded-md tw-bg-sky/white dark:tw-bg-ink/darker tw-max-h-full tw-overflow-y-auto"
+      v-if="!isEmpty(schedule) && isTheSameDate && isVisible"
+      class="tw-column-start tw-w-full lg:tw-w-[320px] tw-px-4 tw-py-6 tw-gap-10 tw-rounded-md tw-bg-sky/white dark:tw-bg-ink/darker tw-max-h-full tw-overflow-y-auto tw-relative"
     >
       <div class="tw-flex tw-items-center tw-w-full tw-justify-between">
         <h3 class="tw-text-xl tw-font-bold tw-text-ink/darkest dark:tw-text-sky/white">
           {{ schedule.section_name }}
         </h3>
 
-        <span class="tw-text-lg tw-font-medium tw-text-ink/darker dark:tw-text-sky/light">{{ currentTime }}</span>
+        <div class="tw-flex tw-items-center tw-gap-2">
+          <span class="tw-text-lg tw-font-medium tw-text-ink/darker dark:tw-text-sky/light">{{ currentTime }}</span>
+
+          <button-prime
+            rounded
+            outlined
+            class="tw-w-10 tw-h-10"
+            @click="closeSchedule"
+          >
+            <icon-base
+              :icon="icons['x-close-big']"
+              :width="10"
+              :height="10"
+              :view-box-size="[12, 12]"
+            />
+          </button-prime>
+        </div>
       </div>
 
       <div class="tw-column-start tw-w-full tw-gap-4">
@@ -43,12 +59,15 @@
 </template>
 
 <script>
+import ButtonPrime from 'primevue/button'
+import IconBase from '@/components/icon-base.vue'
 import { TransitionFade } from '@morev/vue-transitions/vue3'
 
 import dayjs from 'dayjs'
+import icons from '@/utils/icons'
 import isBetween from 'dayjs/plugin/isBetween'
 import { useStore } from 'vuex'
-import { ref, computed, onMounted, onBeforeMount } from 'vue'
+import { ref, computed, watch, onBeforeMount } from 'vue'
 import { isEmpty } from 'lodash'
 
 dayjs.extend(isBetween)
@@ -56,6 +75,8 @@ dayjs.extend(isBetween)
 export default {
   name: 'schedule',
   components: {
+    ButtonPrime,
+    IconBase,
     TransitionFade
   },
   setup () {
@@ -68,18 +89,27 @@ export default {
       dayjs().isSame(schedule.value.date, 'year')
     )
     const activeLecture = ref({})
+    const isVisible = computed(() => store.state.schedule.isVisible)
 
     const currentTime = ref(dayjs().format('HH:mm'))
     let timeInterval
 
-    onMounted(() => {
-      if (!isEmpty(schedule.value)) {
-        timeInterval = setInterval(() => {
-          currentTime.value = dayjs().format('HH:mm')
-          activeLecture.value = schedule.value.lectures.find(item => dayjs().isBetween(item.start, item.end))
-        }, 1000)
-      }
-    })
+    const closeSchedule = () => {
+      store.commit('schedule/setVisibleState', false)
+    }
+
+    watch(
+      () => schedule.value,
+      (value) => {
+        if (!isEmpty(value)) {
+          timeInterval = setInterval(() => {
+            currentTime.value = dayjs().format('HH:mm')
+            activeLecture.value = schedule.value.lectures.find(item => dayjs().isBetween(item.start, item.end))
+          }, 1000)
+        }
+      },
+      { immediate: true }
+    )
 
     onBeforeMount(() => {
       clearInterval(timeInterval)
@@ -87,10 +117,13 @@ export default {
 
     return {
       activeLecture,
+      closeSchedule,
       currentTime,
       dayjs,
+      icons,
       isEmpty,
       isTheSameDate,
+      isVisible,
       schedule
     }
   }
