@@ -26,7 +26,9 @@ export default {
       requiredField: 'Required field',
       cancel: 'Cancel',
       vote_header: 'Voting for the report',
-      questionHint: 'Question'
+      questionHint: 'Question',
+      dark: 'Dark',
+      light: 'Light'
     }
   },
   ru: {
@@ -56,7 +58,9 @@ export default {
       cancel: 'Отмена',
       enterComment: 'Напишите ваш вопрос',
       vote_header: 'Голосование за доклад',
-      questionHint: 'Вопрос'
+      questionHint: 'Вопрос',
+      dark: 'Темная',
+      light: 'Светлая'
     }
   }
 }

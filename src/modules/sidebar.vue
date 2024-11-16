@@ -102,6 +102,7 @@ export default {
     const onSelectTab = async (id) => {
       store.commit('translation/setActiveTabId', id)
       await store.dispatch('votes/getVotes')
+      await store.dispatch('schedule/getScheduleBySectionId', id)
       emit('update:model-value', false)
     }
 

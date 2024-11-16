@@ -1,6 +1,6 @@
 <template>
   <div class="tw-flex tw-items-center tw-gap-3">
-    <span class="tw-text-sm tw-font-medium tw-text-black dark:tw-text-sky/white">Light</span>
+    <span class="tw-text-sm tw-font-medium tw-text-black dark:tw-text-sky/white">{{ $t('message.light') }}</span>
 
     <input-switch
       :model-value="darkMode"
@@ -8,7 +8,7 @@
       @update:model-value="setTheme"
     />
 
-    <span class="tw-text-sm tw-font-medium tw-text-black dark:tw-text-sky/white">Dark</span>
+    <span class="tw-text-sm tw-font-medium tw-text-black dark:tw-text-sky/white">{{ $t('message.dark') }}</span>
   </div>
 </template>
 

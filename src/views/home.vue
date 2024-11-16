@@ -19,7 +19,11 @@
       />
     </div>
 
-    <video-player />
+    <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-items-stretch tw-w-full lg:tw-max-h-[732px] tw-gap-3 tw-pt-[120px] md:tw-pt-0">
+      <video-player />
+      <schedule />
+    </div>
+
     <cinema-mode />
   </div>
 </template>
@@ -27,6 +31,7 @@
 <script>
 import CinemaMode from '@/modules/cinema-mode.vue'
 import IconBase from '@/components/icon-base.vue'
+import Schedule from '@/modules/schedule.vue'
 import Sidebar from '@/modules/sidebar.vue'
 import VideoPlayer from '@/modules/video-player/video-player.vue'
 
@@ -38,6 +43,7 @@ export default {
   components: {
     CinemaMode,
     IconBase,
+    Schedule,
     VideoPlayer
   },
   setup () {
