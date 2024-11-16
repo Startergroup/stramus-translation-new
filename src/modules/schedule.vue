@@ -83,7 +83,7 @@ export default {
     const store = useStore()
 
     const schedule = computed(() => store.state.schedule.schedule)
-    const lectures = computed(() => schedule.value.lectures.sort((a, b) => dayjs(b.start).unix() - dayjs(a.start).unix()))
+    const lectures = computed(() => schedule.value.lectures.sort((a, b) => dayjs(a.start).unix() - dayjs(b.start).unix()))
     const isTheSameDate = computed(() =>
       dayjs().isSame(schedule.value.date, 'day') &&
       dayjs().isSame(schedule.value.date, 'month') &&
