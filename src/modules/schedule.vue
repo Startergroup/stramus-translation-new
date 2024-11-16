@@ -30,7 +30,7 @@
 
       <div class="tw-column-start tw-w-full tw-gap-4">
         <div
-          v-for="(item, index) in schedule.lectures"
+          v-for="(item, index) in lectures"
           :key="index"
           :class="[
             'tw-column-start tw-w-full tw-gap-3 tw-rounded-md tw-bg-sky/light dark:tw-bg-ink/darkest tw-px-4 tw-py-3 tw-transition-all tw-duration-250',
@@ -83,6 +83,7 @@ export default {
     const store = useStore()
 
     const schedule = computed(() => store.state.schedule.schedule)
+    const lectures = computed(() => schedule.value.lectures.sort((a, b) => dayjs(b.start).unix() - dayjs(a.start).unix()))
     const isTheSameDate = computed(() =>
       dayjs().isSame(schedule.value.date, 'day') &&
       dayjs().isSame(schedule.value.date, 'month') &&
@@ -124,6 +125,7 @@ export default {
       isEmpty,
       isTheSameDate,
       isVisible,
+      lectures,
       schedule
     }
   }

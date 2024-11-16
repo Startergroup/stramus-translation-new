@@ -97,7 +97,8 @@ export default {
 
     const getTitle = computed(() => store.getters['settings/getTitle'])
 
-    const tabs = computed(() => store.state.translation.tabs)
+    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+    const tabs = computed(() => store.state.translation.tabs.sort((a, b) => a.order - b.order))
     const activeTabId = computed(() => store.state.translation.activeTabId)
     const onSelectTab = async (id) => {
       store.commit('translation/setActiveTabId', id)
