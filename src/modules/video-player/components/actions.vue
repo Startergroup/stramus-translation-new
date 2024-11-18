@@ -94,7 +94,7 @@ export default {
     })
 
     const openSchedule = () => {
-      store.commit('schedule/setVisibleState', true)
+      store.commit('schedule/setVisibleState', !store.state.schedule.isVisible)
     }
 
     return {

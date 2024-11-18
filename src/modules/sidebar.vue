@@ -63,12 +63,16 @@
         </div>
       </div>
 
-      <button-primary
-        :label="$t('message.logout')"
-        severity="danger"
-        class="tw-w-full tw-mt-auto"
-        @click="logout"
-      />
+      <div class="tw-column-start tw-w-full tw-gap-10 tw-mt-auto">
+        <languages />
+
+        <button-primary
+          :label="$t('message.logout')"
+          severity="danger"
+          class="tw-w-full"
+          @click="logout"
+        />
+      </div>
     </template>
   </vue-final-modal>
 </template>
@@ -76,6 +80,7 @@
 <script>
 import AskQuestionModal from '@/modals/ask-question-modal.vue'
 import ButtonPrimary from 'primevue/button'
+import Languages from '@/modules/languages.vue'
 import Quiz from '@/modules/quiz/quiz.vue'
 import { VueFinalModal, useModal } from 'vue-final-modal'
 
@@ -88,6 +93,7 @@ export default {
   name: 'sidebar',
   components: {
     ButtonPrimary,
+    Languages,
     VueFinalModal
   },
   emits: ['update:model-value'],

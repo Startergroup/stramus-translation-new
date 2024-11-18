@@ -1,5 +1,6 @@
 import Api from '@/api'
 import { API_VERSION } from '@/api/config'
+import dayjs from 'dayjs'
 
 export default {
   namespaced: true,
@@ -20,7 +21,13 @@ export default {
         }
       })
 
-      state.schedule = schedule
+      if (
+        dayjs().isSame(schedule?.date, 'year') &&
+        dayjs().isSame(schedule?.date, 'month') &&
+        dayjs().isSame(schedule?.date, 'day')
+      ) {
+        state.schedule = schedule
+      }
     }
   }
 }
