@@ -6,27 +6,6 @@
 
     <div class="tw-flex tw-items-center tw-gap-2">
       <button-primary
-        v-if="!isEmpty(votes)"
-        :title="$t('message.vote_header')"
-        rounded
-        severity="primary"
-        class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
-        @click="openVoteModal"
-      >
-        <icon-base
-          :icon="icons['survey']"
-          :width="16"
-          :height="16"
-          :view-box-size="[16, 16]"
-          :stroke-width="1"
-          stokre="#FFF"
-          stroke-linejoin="rounded"
-          fill="transparent"
-          class="tw-w-4 tw-h-4"
-        />
-      </button-primary>
-
-      <button-primary
         :title="$t('message.questionHint')"
         rounded
         severity="primary"
@@ -65,7 +44,6 @@
 import AskQuestionModal from '@/modals/ask-question-modal.vue'
 import ButtonPrimary from 'primevue/button'
 import IconBase from '@/components/icon-base.vue'
-import VotesModal from '@/modals/votes-modal.vue'
 
 import icons from '@/utils/icons'
 import { isEmpty } from 'lodash'
@@ -89,9 +67,6 @@ export default {
     const { open: openQuestionModal } = useModal({
       component: AskQuestionModal
     })
-    const { open: openVoteModal } = useModal({
-      component: VotesModal
-    })
 
     const openSchedule = () => {
       store.commit('schedule/setVisibleState', !store.state.schedule.isVisible)
@@ -102,7 +77,6 @@ export default {
       isEmpty,
       openQuestionModal,
       openSchedule,
-      openVoteModal,
       section,
       schedule,
       switchCinemaMode: (value) => store.commit('settings/switchCinemaMode', value),

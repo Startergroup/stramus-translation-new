@@ -1,30 +1,30 @@
 import Api from '@/api'
 import { API_VERSION } from '@/api/config'
+import { isEmpty } from 'lodash'
 
 export default {
   namespaced: true,
   state: {
-    votes: {}
+    votes: []
   },
   actions: {
     async getVotes ({ rootState, state }) {
-      if (!rootState.translation?.activeTabId) return
+      if (!rootState.translation?.activeTabId && isEmpty(rootState.schedule.schedule)) return
 
-      const { data } = await Api.get(`/${API_VERSION}/user/vote`, {
+      const { votes } = await Api.get(`/${API_VERSION}/user/vote`, {
         params: {
-          tab_id: rootState.translation?.activeTabId,
           user_id: rootState.auth.user?.code_id
         }
-      }).then(res => res?.data || {})
+      })
 
-      state.votes = data
+      state.votes = votes
     },
-    async createVote ({ rootState }, { presentationId, value }) {
+    async createVote ({ rootState }, { lectureId, scheduleId }) {
       await Api.post(`/${API_VERSION}/user/vote`, {
         data: {
           user_id: rootState.auth.user?.code_id,
-          presentation_id: presentationId,
-          like: value
+          lecture_id: lectureId,
+          schedule_id: scheduleId
         }
       })
     }

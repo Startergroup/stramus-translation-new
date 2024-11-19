@@ -37,12 +37,30 @@
             { 'tw-border-2 tw-border-primary/base': item?.lecture_id === activeLecture?.lecture_id }
           ]"
         >
-          <div class="tw-column-start tw-w-full tw-gap-1">
-            <span class="tw-text-sm tw-font-bold tw-text-ink/dark dark:tw-text-sky/white">
-              {{ dayjs(item.start).format('HH:mm') }} - {{ dayjs(item.end).format('HH:mm') }}
-            </span>
+          <div class="tw-flex tw-items-start tw-justify-between tw-w-full">
+            <div class="tw-column-start tw-w-full tw-gap-1">
+              <span class="tw-text-sm tw-font-bold tw-text-ink/dark dark:tw-text-sky/white">
+                {{ dayjs(item.start).format('HH:mm') }} - {{ dayjs(item.end).format('HH:mm') }}
+              </span>
 
-            <span class="tw-text-sm tw-font-normal tw-text-ink/dark dark:tw-text-sky/light">{{ item.name }}</span>
+              <span class="tw-text-sm tw-font-normal tw-text-ink/dark dark:tw-text-sky/light">{{ item.name }}</span>
+            </div>
+
+            <div
+              v-if="item.is_votable"
+              :class="[
+                'tw-flex tw-items-center tw-justify-center tw-w-7 tw-h-7 tw-cursor-pointer',
+                votes.find(vote => vote.lecture_id === item.lecture_id) ? '[&_path]:tw-fill-primary/base' : '[&_path]:tw-fill-ink/darker dark:[&_path]:tw-fill-white'
+              ]"
+              @click="createVote({ scheduleId: schedule?.schedule_id, lectureId: item?.lecture_id })"
+            >
+              <icon-base
+                :icon="icons['fi-rr-heart']"
+                :width="15"
+                :height="15"
+                :view-box-size="[15, 15]"
+              />
+            </div>
           </div>
 
           <div
@@ -99,6 +117,12 @@ export default {
       store.commit('schedule/setVisibleState', false)
     }
 
+    const votes = computed(() => store.state.votes.votes)
+    const createVote = async ({ lectureId, scheduleId }) => {
+      await store.dispatch('votes/createVote', { lectureId, scheduleId })
+      await store.dispatch('votes/getVotes')
+    }
+
     watch(
       () => schedule.value,
       (value) => {
@@ -119,6 +143,7 @@ export default {
     return {
       activeLecture,
       closeSchedule,
+      createVote,
       currentTime,
       dayjs,
       icons,
@@ -126,7 +151,8 @@ export default {
       isTheSameDate,
       isVisible,
       lectures,
-      schedule
+      schedule,
+      votes
     }
   }
 }
