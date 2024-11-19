@@ -21,13 +21,11 @@ export default {
         }
       })
 
-      if (
-        dayjs().isSame(schedule?.date, 'year') &&
-        dayjs().isSame(schedule?.date, 'month') &&
-        dayjs().isSame(schedule?.date, 'day')
-      ) {
-        state.schedule = schedule
-      }
+      state.schedule = schedule.find(item => (
+        dayjs().isSame(item?.date, 'year') &&
+        dayjs().isSame(item?.date, 'month') &&
+        dayjs().isSame(item?.date, 'day')
+      ))
     }
   }
 }
