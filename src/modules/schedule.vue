@@ -55,7 +55,7 @@
               @click="createVote({ scheduleId: schedule?.schedule_id, lectureId: item?.lecture_id })"
             >
               <icon-base
-                :icon="icons['fi-rr-heart']"
+                :icon="icons['fi-rr-thumbs-up']"
                 :width="15"
                 :height="15"
                 :view-box-size="[15, 15]"
