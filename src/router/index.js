@@ -1,10 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
 
 import authMiddleware from './middlewares/auth.middleware'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: import.meta.env.MODE === 'production' ? createWebHistory() : createWebHashHistory(),
   routes
 })
 

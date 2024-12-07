@@ -6,7 +6,7 @@
     "dev": "vite --host --mode local-dev",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
-    "preview": "vite preview"
+    "preview": "serve ./dist"
   },
   "dependencies": {
     "@morev/vue-transitions": "^3.0.2",
