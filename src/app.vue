@@ -21,6 +21,7 @@ export default {
     const store = useStore()
 
     const darkMode = computed(() => store.state.settings.darkMode)
+    const favicon = computed(() => store.state.settings.options?.favicon)
 
     onMounted(async () => {
       if (darkMode.value) {
@@ -34,6 +35,10 @@ export default {
 
       await store.dispatch('settings/getSettings')
       await store.dispatch('votes/getVotes')
+
+      if (favicon.value) {
+        document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${favicon.value}`)
+      }
     })
   }
 }
