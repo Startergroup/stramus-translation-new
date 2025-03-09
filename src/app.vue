@@ -21,7 +21,11 @@ export default {
     const store = useStore()
 
     const darkMode = computed(() => store.state.settings.darkMode)
-    const favicon = computed(() => store.state.settings.options?.favicon)
+    const favicon = computed(() => {
+      if (!store.state.settings.options?.favicon) return null
+
+      return store.state.settings.options?.favicon.split('/').at(-1)
+    })
 
     onMounted(async () => {
       if (darkMode.value) {
