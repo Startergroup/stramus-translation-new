@@ -69,7 +69,7 @@ export default {
     })
 
     const openSchedule = () => {
-      store.commit('schedule/setVisibleState', !store.state.schedule.isVisible)
+      store.commit('schedule/SET_VISIBLE_STATE', !store.state.schedule.isVisible)
     }
 
     return {
@@ -79,7 +79,7 @@ export default {
       openSchedule,
       section,
       schedule,
-      switchCinemaMode: (value) => store.commit('settings/switchCinemaMode', value),
+      switchCinemaMode: (value) => store.commit('settings/SWITCH_CINEMA_MODE', value),
       votes
     }
   }

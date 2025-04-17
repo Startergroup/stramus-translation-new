@@ -14,7 +14,7 @@ export default async (to, from, next) => {
     }
 
     if (store.getters['auth/isLogged']) {
-      store.commit('auth/setTimer', setInterval(() => {
+      store.commit('auth/SET_TIMER', setInterval(() => {
         store.dispatch('auth/updateActivity')
       }, 10000))
 
@@ -23,7 +23,7 @@ export default async (to, from, next) => {
 
     return next('/auth')
   } else if (to.name === 'auth' && store.getters['auth/isLogged']) {
-    store.commit('auth/setTimer', setInterval(() => {
+    store.commit('auth/SET_TIMER', setInterval(() => {
       store.dispatch('auth/updateActivity')
     }, 10000))
 

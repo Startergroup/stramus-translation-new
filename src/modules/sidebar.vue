@@ -35,7 +35,7 @@
               v-for="(item, index) in quizzes"
               :key="index"
               severity="secondary"
-              class="tw-w-full tw-text-left"
+              class="tw-w-full tw-text-left dark:tw-bg-ink/base"
               @click="setSelectedQuizId(item.quiz_id)"
             >
               <template #default>
@@ -48,7 +48,9 @@
                     ]"
                   />
 
-                  {{ item.name }}
+                  <span class="tw-text-black dark:tw-text-white">
+                    {{ item.name }}
+                  </span>
                 </div>
               </template>
             </button-primary>
@@ -84,10 +86,11 @@ import Languages from '@/modules/languages.vue'
 import Quiz from '@/modules/quiz/quiz.vue'
 import { VueFinalModal, useModal } from 'vue-final-modal'
 
-import { USER_DATA } from '@/constants/storages'
+import { LAST_TAB_ID, USER_DATA } from '@/constants/storages'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { computed, onMounted } from 'vue'
+import { cloneDeep } from 'lodash'
 
 export default {
   name: 'sidebar',
@@ -97,20 +100,30 @@ export default {
     VueFinalModal
   },
   emits: ['update:model-value'],
-  setup (props, { emit }) {
+  setup (_props, { emit }) {
     const store = useStore()
     const router = useRouter()
 
     const getTitle = computed(() => store.getters['settings/getTitle'])
 
-    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-    const tabs = computed(() => store.state.translation.tabs.sort((a, b) => a.order - b.order))
+    const tabs = computed(() => {
+      const copyOfTabs = cloneDeep(store.state.translation.tabs)
+      return copyOfTabs.sort((a, b) => a.order - b.order)
+    })
     const activeTabId = computed(() => store.state.translation.activeTabId)
     const onSelectTab = async (id) => {
-      store.commit('translation/setActiveTabId', id)
+      if ((id !== activeTabId.value) && activeTabId.value !== null) {
+        store.commit('analytics/UPDATE_ACTIVITY_END_TIME', activeTabId.value)
+      }
+
+      store.dispatch('analytics/periodicActivityCheck')
+      store.commit('analytics/APPEND_SECTION_ACTIVITY', id)
+
+      store.commit('translation/SET_ACTIVE_TAB_ID', id)
+
       await store.dispatch('votes/getVotes')
       await store.dispatch('schedule/getScheduleBySectionId', id)
-      store.commit('schedule/setVisibleState', true)
+      store.commit('schedule/SET_VISIBLE_STATE', true)
       emit('update:model-value', false)
     }
 
@@ -120,7 +133,7 @@ export default {
         component: Quiz
       })
 
-      store.commit('quiz/setSelectedQuizId', id)
+      store.commit('quiz/SET_SELECTED_QUIZ_ID', id)
       open()
       emit('update:model-value', false)
     }
@@ -136,9 +149,9 @@ export default {
     const logout = async () => {
       clearInterval(store.state.auth.timer)
 
-      store.commit('auth/setTimer', null)
-      store.commit('auth/setToken', null)
-      store.commit('auth/setUser', null)
+      store.commit('auth/SET_TIMER', null)
+      store.commit('auth/SET_TOKEN', null)
+      store.commit('auth/SET_USER', null)
 
       localStorage.setItem(USER_DATA, null)
 

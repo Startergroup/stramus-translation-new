@@ -15,19 +15,19 @@ export default {
     }
   },
   mutations: {
-    saveUserData (state) {
+    SAVE_USER_DATA (state) {
       localStorage.setItem(USER_DATA, JSON.stringify({
         token: state.token,
         user: state.user
       }))
     },
-    setTimer (state, timer) {
+    SET_TIMER (state, timer) {
       state.timer = timer
     },
-    setToken (state, token) {
+    SET_TOKEN (state, token) {
       state.token = token
     },
-    setUser (state, user) {
+    SET_USER (state, user) {
       state.user = user
     }
   },
@@ -42,8 +42,8 @@ export default {
       }) || {}
 
       if (success) {
-        commit('setUser', data)
-        commit('saveUserData')
+        commit('SET_USER', data)
+        commit('SAVE_USER_DATA')
 
         return {
           success
@@ -65,9 +65,9 @@ export default {
       })
 
       if (success) {
-        commit('setToken', data?.access_token)
-        commit('setUser', data)
-        commit('saveUserData')
+        commit('SET_TOKEN', data?.access_token)
+        commit('SET_USER', data)
+        commit('SAVE_USER_DATA')
 
         return {
           success: true

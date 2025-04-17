@@ -35,9 +35,9 @@ class Api {
       if (error.request.status === 401) {
         clearInterval(store.state.auth.timer)
 
-        store.commit('auth/setTimer', null)
-        store.commit('auth/setToken', null)
-        store.commit('auth/setUser', null)
+        store.commit('auth/SET_TIMER', null)
+        store.commit('auth/SET_TOKEN', null)
+        store.commit('auth/SET_USER', null)
 
         localStorage.setItem(USER_DATA, null)
 

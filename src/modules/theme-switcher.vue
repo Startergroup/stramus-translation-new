@@ -28,7 +28,7 @@ export default {
 
     const darkMode = computed(() => store.state.settings.darkMode)
     const setTheme = (value) => {
-      store.commit('settings/setTheme', value)
+      store.commit('settings/SET_THEME', value)
     }
 
     const ptInputSwitch = {}

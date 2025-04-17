@@ -9,8 +9,8 @@
 import { ModalsContainer } from 'vue-final-modal'
 
 import { useStore } from 'vuex'
-import { computed, onMounted } from 'vue'
-import { USER_DATA } from '@/constants/storages'
+import { computed, onMounted, onUnmounted } from 'vue'
+import { USER_SECTION_ACTIVITY, USER_DATA } from '@/constants/storages'
 
 export default {
   name: 'app',
@@ -27,15 +27,25 @@ export default {
       return store.state.settings.options?.favicon.split('/').at(-1)
     })
 
+    const handleBeforeUnload = () => {
+      store.dispatch('analytics/sendAnalytics')
+    }
+
     onMounted(async () => {
+      window.addEventListener('beforeunload', handleBeforeUnload)
+
       if (darkMode.value) {
         document.querySelector('html').setAttribute('data-mode', 'dark')
       }
 
-      const { token = null, user = {} } = JSON.parse(localStorage.getItem(USER_DATA)) || {}
+      const stored_user_data = localStorage.getItem(USER_DATA)
+      const { token = null, user = {} } = stored_user_data ? JSON.parse(stored_user_data) : {}
 
-      store.commit('auth/setToken', token)
-      store.commit('auth/setUser', user)
+      store.commit('auth/SET_TOKEN', token)
+      store.commit('auth/SET_USER', user)
+
+      const parsed_user_activities = JSON.parse(localStorage.getItem(USER_SECTION_ACTIVITY)) || []
+      store.commit('analytics/SET_SECTION_ACTIVITIES', parsed_user_activities)
 
       await store.dispatch('settings/getSettings')
       await store.dispatch('votes/getVotes')
@@ -43,6 +53,10 @@ export default {
       if (favicon.value) {
         document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${favicon.value}`)
       }
+    })
+
+    onUnmounted(() => {
+
     })
   }
 }

@@ -25,11 +25,11 @@ export default {
     }
   },
   mutations: {
-    setTheme (state, isDarkMode) {
+    SET_THEME (state, isDarkMode) {
       state.darkMode = isDarkMode
       document.querySelector('html').setAttribute('data-mode', isDarkMode ? 'dark' : 'light')
     },
-    switchCinemaMode (state, value) {
+    SWITCH_CINEMA_MODE (state, value) {
       state.cinemaMode = value
     }
   },

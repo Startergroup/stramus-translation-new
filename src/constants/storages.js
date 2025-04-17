@@ -1,1 +1,3 @@
-export const USER_DATA = 'streamusUserData'
+export const LAST_TAB_ID = 'LAST_TAB_ID'
+export const USER_DATA = 'USER_DATA'
+export const USER_SECTION_ACTIVITY = 'USER_SECTION_ACTIVITY'

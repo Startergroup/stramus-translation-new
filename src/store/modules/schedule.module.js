@@ -9,7 +9,7 @@ export default {
     isVisible: false
   },
   mutations: {
-    setVisibleState (state, value) {
+    SET_VISIBLE_STATE (state, value) {
       state.isVisible = value
     }
   },

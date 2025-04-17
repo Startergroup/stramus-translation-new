@@ -15,7 +15,7 @@ export default {
     }
   },
   mutations: {
-    setActiveTabId (state, id) {
+    SET_ACTIVE_TAB_ID (state, id) {
       state.activeTabId = id
     }
   },

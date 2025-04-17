@@ -19,7 +19,7 @@ export default {
     }
   },
   mutations: {
-    setSelectedQuizId (state, id) {
+    SET_SELECTED_QUIZ_ID (state, id) {
       state.selectedQuizId = id
     }
   },

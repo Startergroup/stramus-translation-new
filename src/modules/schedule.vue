@@ -114,7 +114,7 @@ export default {
     let timeInterval
 
     const closeSchedule = () => {
-      store.commit('schedule/setVisibleState', false)
+      store.commit('schedule/SET_VISIBLE_STATE', false)
     }
 
     const votes = computed(() => store.state.votes.votes)
