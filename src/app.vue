@@ -27,7 +27,8 @@ export default {
       return store.state.settings.options?.favicon.split('/').at(-1)
     })
 
-    const handleBeforeUnload = () => {
+    const handleBeforeUnload = async () => {
+      await store.dispatch('analytics/onChangeTab')
       store.commit('analytics/CLEAR_INTERVAL')
     }
 
