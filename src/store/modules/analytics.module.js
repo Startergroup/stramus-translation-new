@@ -18,6 +18,18 @@ export default {
     }
   },
   actions: {
+    // TODO: Переработать логику в модуле и в боковом меню
+    async onChangeTab ({ rootState, state }) {
+      if (!rootState.translation?.activeTabId) return
+
+      await Api.post(`/${API_VERSION}/analytics/section-views`, {
+        data: {
+          tab_id: rootState.translation?.activeTabId,
+          user_id: rootState.auth.user?.code_id,
+          start_time: new Date().getTime()
+        }
+      })
+    },
     periodicSendSectionActivity ({ rootState, state }) {
       state.interval_id = setInterval(async () => {
         if (!rootState.translation?.activeTabId) return

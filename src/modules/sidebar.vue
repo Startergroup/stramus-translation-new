@@ -86,7 +86,7 @@ import Languages from '@/modules/languages.vue'
 import Quiz from '@/modules/quiz/quiz.vue'
 import { VueFinalModal, useModal } from 'vue-final-modal'
 
-import { LAST_TAB_ID, USER_DATA } from '@/constants/storages'
+import { USER_DATA } from '@/constants/storages'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import { computed, onMounted } from 'vue'
@@ -112,6 +112,7 @@ export default {
     })
     const activeTabId = computed(() => store.state.translation.activeTabId)
     const onSelectTab = async (id) => {
+      await store.dispatch('analytics/onChangeTab')
       store.commit('translation/SET_ACTIVE_TAB_ID', id)
       await store.dispatch('votes/getVotes')
       await store.dispatch('schedule/getScheduleBySectionId', id)
