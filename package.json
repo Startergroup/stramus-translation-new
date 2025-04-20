@@ -6,7 +6,8 @@
     "dev": "vite --host --mode local-dev --port 8082",
     "build:dev": "vite build --mode development",
     "build:prod": "vite build --mode production",
-    "preview": "serve ./dist"
+    "preview": "vite preview",
+    "serve:build": "serve ./dist"
   },
   "dependencies": {
     "@morev/vue-transitions": "^3.0.2",

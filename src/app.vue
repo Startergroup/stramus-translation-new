@@ -10,7 +10,7 @@ import { ModalsContainer } from 'vue-final-modal'
 
 import { useStore } from 'vuex'
 import { computed, onMounted, onUnmounted } from 'vue'
-import { USER_SECTION_ACTIVITY, USER_DATA } from '@/constants/storages'
+import { USER_DATA } from '@/constants/storages'
 
 export default {
   name: 'app',
@@ -28,7 +28,7 @@ export default {
     })
 
     const handleBeforeUnload = () => {
-      store.dispatch('analytics/sendAnalytics')
+      store.commit('analytics/CLEAR_INTERVAL')
     }
 
     onMounted(async () => {
@@ -44,19 +44,19 @@ export default {
       store.commit('auth/SET_TOKEN', token)
       store.commit('auth/SET_USER', user)
 
-      const parsed_user_activities = JSON.parse(localStorage.getItem(USER_SECTION_ACTIVITY)) || []
-      store.commit('analytics/SET_SECTION_ACTIVITIES', parsed_user_activities)
-
       await store.dispatch('settings/getSettings')
       await store.dispatch('votes/getVotes')
 
       if (favicon.value) {
         document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${favicon.value}`)
       }
+
+      await store.dispatch('analytics/periodicSendSectionActivity')
     })
 
     onUnmounted(() => {
-
+      handleBeforeUnload()
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     })
   }
 }

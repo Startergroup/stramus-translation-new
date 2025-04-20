@@ -112,15 +112,7 @@ export default {
     })
     const activeTabId = computed(() => store.state.translation.activeTabId)
     const onSelectTab = async (id) => {
-      if ((id !== activeTabId.value) && activeTabId.value !== null) {
-        store.commit('analytics/UPDATE_ACTIVITY_END_TIME', activeTabId.value)
-      }
-
-      store.dispatch('analytics/periodicActivityCheck')
-      store.commit('analytics/APPEND_SECTION_ACTIVITY', id)
-
       store.commit('translation/SET_ACTIVE_TAB_ID', id)
-
       await store.dispatch('votes/getVotes')
       await store.dispatch('schedule/getScheduleBySectionId', id)
       store.commit('schedule/SET_VISIBLE_STATE', true)
