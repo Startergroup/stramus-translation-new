@@ -9,7 +9,7 @@ export default {
   },
   actions: {
     async getVotes ({ rootState, state }) {
-      if (!rootState.translation?.activeTabId && isEmpty(rootState.schedule.schedule)) return
+      if (!rootState.translation?.active_section_id && isEmpty(rootState.schedule.schedule)) return
 
       const { votes } = await Api.get(`/${API_VERSION}/user/vote`, {
         params: {

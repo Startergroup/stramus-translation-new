@@ -54,7 +54,7 @@ export default {
     const store = useStore()
 
     const plyr = ref(null)
-    const activeTab = computed(() => store.getters['translation/getActiveTab'])
+    const activeTab = computed(() => store.getters['section/getActiveTab'])
 
     return {
       activeTab,

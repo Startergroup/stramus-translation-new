@@ -77,8 +77,8 @@ export default {
     const toast = useToast()
     const store = useStore()
 
-    const activeTabId = computed(() => store.state.translation.activeTabId)
-    const activeTab = computed(() => store.getters['translation/getActiveTab'])
+    const activeTabId = computed(() => store.state.section.active_section_id)
+    const activeTab = computed(() => store.getters['section/getActiveTab'])
 
     const { form, errors, handleSubmit } = getForm({
       items: [{

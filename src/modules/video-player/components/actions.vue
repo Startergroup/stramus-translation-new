@@ -23,6 +23,7 @@
 
       <button-primary
         v-if="!isEmpty(schedule)"
+        :title="$t('message.HINT_TEXT_SCHEDULE')"
         rounded
         severity="primary"
         class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
@@ -61,15 +62,14 @@ export default {
     const store = useStore()
 
     const votes = computed(() => store.state.votes.votes)
-    const section = computed(() => store.getters['translation/getActiveTab'])
     const schedule = computed(() => store.state.schedule.schedule)
+    const section = computed(() => store.getters['section/getActiveTab'])
 
     const { open: openQuestionModal } = useModal({
       component: AskQuestionModal
     })
-
     const openSchedule = () => {
-      store.commit('schedule/SET_VISIBLE_STATE', !store.state.schedule.isVisible)
+      store.commit('schedule/SET_VISIBLE_STATE', !store.state.schedule.is_visible)
     }
 
     return {
@@ -77,8 +77,8 @@ export default {
       isEmpty,
       openQuestionModal,
       openSchedule,
-      section,
       schedule,
+      section,
       switchCinemaMode: (value) => store.commit('settings/SWITCH_CINEMA_MODE', value),
       votes
     }

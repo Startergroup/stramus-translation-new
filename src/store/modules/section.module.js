@@ -4,19 +4,19 @@ import { API_VERSION } from '@/api/config'
 export default {
   namespaced: true,
   state: {
-    activeTabId: null,
+    active_section_id: null,
     tabs: []
   },
   getters: {
     getActiveTab (state) {
-      if (!state.activeTabId) return {}
+      if (!state.active_section_id) return {}
 
-      return state.tabs.find(tab => tab?.tab_id === state.activeTabId)
+      return state.tabs.find(tab => tab?.tab_id === state.active_section_id)
     }
   },
   mutations: {
     SET_ACTIVE_TAB_ID (state, id) {
-      state.activeTabId = id
+      state.active_section_id = id
     }
   },
   actions: {

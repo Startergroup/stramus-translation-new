@@ -27,14 +27,7 @@ export default {
       return store.state.settings.options?.favicon.split('/').at(-1)
     })
 
-    const handleBeforeUnload = async () => {
-      await store.dispatch('analytics/onChangeTab')
-      store.commit('analytics/CLEAR_INTERVAL')
-    }
-
     onMounted(async () => {
-      window.addEventListener('beforeunload', handleBeforeUnload)
-
       if (darkMode.value) {
         document.querySelector('html').setAttribute('data-mode', 'dark')
       }
@@ -51,13 +44,6 @@ export default {
       if (favicon.value) {
         document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${favicon.value}`)
       }
-
-      await store.dispatch('analytics/periodicSendSectionActivity')
-    })
-
-    onUnmounted(() => {
-      handleBeforeUnload()
-      window.removeEventListener('beforeunload', handleBeforeUnload)
     })
   }
 }

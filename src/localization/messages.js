@@ -28,7 +28,8 @@ export default {
       vote_header: 'Voting for the report',
       questionHint: 'Question',
       dark: 'Dark',
-      light: 'Light'
+      light: 'Light',
+      HINT_TEXT_SCHEDULE: 'Schedule'
     }
   },
   ru: {
@@ -58,9 +59,10 @@ export default {
       cancel: 'Отмена',
       enterComment: 'Напишите ваш вопрос',
       vote_header: 'Голосование за доклад',
-      questionHint: 'Вопрос',
+      questionHint: 'Вопрос спикеру',
       dark: 'Темная',
-      light: 'Светлая'
+      light: 'Светлая',
+      HINT_TEXT_SCHEDULE: 'Расписание'
     }
   }
 }

@@ -107,16 +107,17 @@ export default {
     const getTitle = computed(() => store.getters['settings/getTitle'])
 
     const tabs = computed(() => {
-      const copyOfTabs = cloneDeep(store.state.translation.tabs)
+      const copyOfTabs = cloneDeep(store.state.section.tabs)
       return copyOfTabs.sort((a, b) => a.order - b.order)
     })
-    const activeTabId = computed(() => store.state.translation.activeTabId)
+    const activeTabId = computed(() => store.state.section.active_section_id)
     const onSelectTab = async (id) => {
-      await store.dispatch('analytics/onChangeTab')
-      store.commit('translation/SET_ACTIVE_TAB_ID', id)
+      store.commit('section/SET_ACTIVE_TAB_ID', id)
+
       await store.dispatch('votes/getVotes')
       await store.dispatch('schedule/getScheduleBySectionId', id)
       store.commit('schedule/SET_VISIBLE_STATE', true)
+
       emit('update:model-value', false)
     }
 
@@ -153,7 +154,7 @@ export default {
     }
 
     onMounted(async () => {
-      await store.dispatch('translation/getTabs')
+      await store.dispatch('section/getTabs')
       await store.dispatch('quiz/getQuizzes')
     })
 
