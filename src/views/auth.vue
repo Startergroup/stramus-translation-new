@@ -1,13 +1,22 @@
 <template>
   <div class="tw-grid tw-grid-cols-1 xl:tw-grid-cols-2 tw-w-full tw-h-full">
-    <div class="tw-hidden xl:tw-column-center tw-justify-center tw-w-full tw-gap-2 tw-bg-transparent tw-px-10">
-      <h2 class="tw-text-6xl tw-font-bold tw-text-black dark:tw-text-white tw-text-center">
-        {{ getTitle }}
-      </h2>
+    <div class="tw-hidden xl:tw-column-center tw-justify-center tw-w-full tw-bg-transparent tw-px-10 tw-gap-12">
+      <img
+        v-if="logo"
+        :src="`https://streamos.ru/uploads/${logo}`"
+        :alt="getTitle"
+        class="tw-w-auto tw-min-h-[380px] tw-object-cover"
+      >
 
-      <span class="tw-text-lg tw-font-medium tw-text-black dark:tw-text-white tw-text-center">
-        {{ getSubtitle }}
-      </span>
+      <div class="tw-column-center tw-justify-center tw-w-full tw-gap-2">
+        <h2 class="tw-text-6xl tw-font-bold tw-text-black dark:tw-text-white tw-text-center">
+          {{ getTitle }}
+        </h2>
+
+        <span class="tw-text-lg tw-font-medium tw-text-black dark:tw-text-white tw-text-center">
+          {{ getSubtitle }}
+        </span>
+      </div>
     </div>
 
     <div class="tw-column-center tw-justify-center tw-w-full tw-bg-white dark:tw-bg-ink/base tw-px-4 xl:tw-px-0">
@@ -131,6 +140,7 @@ export default {
     const toast = useToast()
     const { t } = useI18n()
 
+    const logo = computed(() => store.state.settings?.logo || '')
     const getTitle = computed(() => store.getters['settings/getTitle'])
     const getSubtitle = computed(() => store.getters['settings/getSubtitle'])
 
@@ -190,6 +200,7 @@ export default {
 
     return {
       errors,
+      logo,
       form,
       getTitle,
       getSubtitle,

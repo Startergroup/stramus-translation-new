@@ -4,7 +4,41 @@
       {{ section.name }}
     </span>
 
-    <div class="tw-flex tw-items-center tw-gap-2">
+    <div class="tw-flex tw-items-center tw-gap-3">
+      <button-primary
+        v-if="!isEmpty(schedule)"
+        :title="$t('message.HINT_TEXT_SCHEDULE')"
+        rounded
+        severity="primary"
+        class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
+        @click="toggleScheduleVisibility"
+      >
+        <icon-base
+          :icon="icons['fi-rr-calendar']"
+          :width="15"
+          :height="15"
+          :view-box-size="[15, 15]"
+          fill="transparent"
+        />
+      </button-primary>
+
+      <button-primary
+        v-if="!isEmpty(section)"
+        :title="$t('message.HINT_TEXT_CHAT')"
+        rounded
+        severity="primary"
+        class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
+        @click="toggleChatVisibility"
+      >
+        <icon-base
+          :icon="icons['fi-rr-comments']"
+          :width="15"
+          :height="15"
+          :view-box-size="[15, 15]"
+          fill="#FFF"
+        />
+      </button-primary>
+
       <button-primary
         :title="$t('message.questionHint')"
         rounded
@@ -17,23 +51,6 @@
           :width="20"
           :height="20"
           :view-box-size="[20, 20]"
-          fill="transparent"
-        />
-      </button-primary>
-
-      <button-primary
-        v-if="!isEmpty(schedule)"
-        :title="$t('message.HINT_TEXT_SCHEDULE')"
-        rounded
-        severity="primary"
-        class="tw-flex tw-items-center tw-justify-center tw-w-10 tw-h-10"
-        @click="openSchedule"
-      >
-        <icon-base
-          :icon="icons['fi-rr-calendar']"
-          :width="15"
-          :height="15"
-          :view-box-size="[15, 15]"
           fill="transparent"
         />
       </button-primary>
@@ -68,18 +85,17 @@ export default {
     const { open: openQuestionModal } = useModal({
       component: AskQuestionModal
     })
-    const openSchedule = () => {
-      store.commit('schedule/SET_VISIBLE_STATE', !store.state.schedule.is_visible)
-    }
+    const toggleChatVisibility = () => store.commit('chat/SET_CHAT_VISIBLE_STATE', !store.state.chat.is_chat_open)
+    const toggleScheduleVisibility = () => store.commit('schedule/SET_VISIBLE_STATE', !store.state.schedule.is_visible)
 
     return {
       icons,
       isEmpty,
       openQuestionModal,
-      openSchedule,
       schedule,
       section,
-      switchCinemaMode: (value) => store.commit('settings/SWITCH_CINEMA_MODE', value),
+      toggleChatVisibility,
+      toggleScheduleVisibility,
       votes
     }
   }

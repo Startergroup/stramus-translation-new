@@ -3,9 +3,15 @@
     <header-comp />
 
     <div class="tw-flex tw-flex-col lg:tw-flex-row tw-justify-center tw-items-stretch tw-w-full lg:tw-max-h-[732px] tw-gap-3">
-      <video-player />
-      <schedule v-if="!isEmpty(schedule) && isTheSameDate && isVisibleSchedule" />
-      <chat v-if="isVisibleChat" />
+      <transition-fade :duration="300">
+        <schedule v-if="!isEmpty(schedule) && isTheSameDate && isScheduleOpen" />
+      </transition-fade>
+
+      <video-player class="tw-order-1 lg:tw-order-[unset]" />
+
+      <transition-fade :duration="300">
+        <chat v-if="isChatOpen" />
+      </transition-fade>
     </div>
 
     <cinema-mode />
@@ -17,6 +23,7 @@ import Chat from '@/modules/chat/chat.vue'
 import CinemaMode from '@/modules/cinema-mode.vue'
 import HeaderComp from '@/modules/header-comp.vue'
 import Schedule from '@/modules/schedule.vue'
+import { TransitionFade } from '@morev/vue-transitions/vue3'
 import VideoPlayer from '@/modules/video-player/video-player.vue'
 
 import dayjs from 'dayjs'
@@ -31,6 +38,7 @@ export default {
     CinemaMode,
     HeaderComp,
     Schedule,
+    TransitionFade,
     VideoPlayer
   },
   setup () {
@@ -38,11 +46,11 @@ export default {
 
     const schedule = computed(() => store.state.schedule.schedule)
     const isTheSameDate = computed(() => dayjs().isSame(schedule.value.date, 'day'))
-    const isVisibleSchedule = computed(() => store.state.schedule.is_visible)
+    const isScheduleOpen = computed(() => store.state.schedule.is_visible)
 
     const lecture_views_interval_id = computed(() => store.state.schedule.lecture_views_interval_id)
 
-    const isVisibleChat = computed(() => store.getters['chat/isVisible'])
+    const isChatOpen = computed(() => store.state.chat.is_chat_open)
 
     onMounted(() => {
       store.dispatch('schedule/runIntervalCheckCurrentLecture')
@@ -69,9 +77,9 @@ export default {
 
     return {
       isEmpty,
+      isChatOpen,
+      isScheduleOpen,
       isTheSameDate,
-      isVisibleChat,
-      isVisibleSchedule,
       schedule
     }
   }

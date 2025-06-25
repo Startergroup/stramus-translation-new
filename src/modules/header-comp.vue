@@ -17,15 +17,12 @@
         fill="#6C63FF"
       />
     </div>
-
-    <theme-switcher />
   </div>
 </template>
 
 <script>
 import IconBase from '@/components/icon-base.vue'
 import Sidebar from '@/modules/sidebar.vue'
-import ThemeSwitcher from '@/modules/theme-switcher.vue'
 
 import icons from '@/utils/icons'
 import { useModal } from 'vue-final-modal'
@@ -33,8 +30,7 @@ import { useModal } from 'vue-final-modal'
 export default {
   name: 'header-comp',
   components: {
-    IconBase,
-    ThemeSwitcher
+    IconBase
   },
   setup () {
     const openSidebar = () => {

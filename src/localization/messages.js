@@ -29,7 +29,8 @@ export default {
       questionHint: 'Question',
       dark: 'Dark',
       light: 'Light',
-      HINT_TEXT_SCHEDULE: 'Schedule'
+      HINT_TEXT_SCHEDULE: 'Schedule',
+      HINT_TEXT_CHAT: 'Chat'
     }
   },
   ru: {
@@ -62,7 +63,8 @@ export default {
       questionHint: 'Вопрос спикеру',
       dark: 'Темная',
       light: 'Светлая',
-      HINT_TEXT_SCHEDULE: 'Расписание'
+      HINT_TEXT_SCHEDULE: 'Расписание',
+      HINT_TEXT_CHAT: 'Чат'
     }
   }
 }

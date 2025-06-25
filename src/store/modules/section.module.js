@@ -1,5 +1,6 @@
 import Api from '@/api'
 import { API_VERSION } from '@/api/config'
+import { LAST_TAB_ID } from '@/constants/storages'
 
 export default {
   namespaced: true,
@@ -17,13 +18,13 @@ export default {
   mutations: {
     SET_ACTIVE_TAB_ID (state, id) {
       state.active_section_id = id
+      localStorage.setItem(LAST_TAB_ID, id)
     }
   },
   actions: {
     async getTabs ({ state, rootState }) {
       // При гостевом доступе стрим не показываем
       if (rootState.auth?.user?.isGuest) return
-
       state.tabs = await Api.get(`/${API_VERSION}/tabs`).then(res => res?.data || [])
     }
   }

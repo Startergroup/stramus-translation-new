@@ -1,5 +1,5 @@
 <template>
-  <div class="tw-flex tw-items-center tw-gap-3">
+  <div class="tw-flex tw-items-center tw-gap-3 tw-fixed tw-top-8 md:tw-top-12 tw-right-6 md:tw-right-10">
     <span class="tw-text-sm tw-font-medium tw-text-black dark:tw-text-sky/white">{{ $t('message.light') }}</span>
 
     <input-switch
