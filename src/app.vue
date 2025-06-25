@@ -51,10 +51,16 @@ export default {
         document.querySelector('link[rel="icon"]').setAttribute('href', `https://streamos.ru/uploads/${favicon.value}`)
       }
 
+      if (sections.value.length === 1) {
+        store.commit('section/SET_ACTIVE_TAB_ID', sections.value[0]?.tab_id)
+        await store.dispatch('schedule/getScheduleBySectionId', sections.value[0]?.tab_id)
+        store.commit('schedule/SET_VISIBLE_STATE', true)
+      }
+
       const LAST_ACTIVE_SECTION = JSON.parse(localStorage.getItem(LAST_TAB_ID))
       const isThereTargetTab = sections.value.some(item => parseInt(item.tab_id) === parseInt(LAST_ACTIVE_SECTION))
 
-      if (isThereTargetTab) {
+      if (isThereTargetTab && sections.value.length > 1) {
         store.commit('section/SET_ACTIVE_TAB_ID', LAST_ACTIVE_SECTION)
         await store.dispatch('schedule/getScheduleBySectionId', LAST_ACTIVE_SECTION)
         store.commit('schedule/SET_VISIBLE_STATE', true)

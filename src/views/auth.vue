@@ -140,7 +140,11 @@ export default {
     const toast = useToast()
     const { t } = useI18n()
 
-    const logo = computed(() => store.state.settings?.logo || '')
+    const logo = computed(() => {
+      if (!store.state.settings.options?.logo) return null
+
+      return store.state.settings.options?.logo.split('/').at(-1)
+    })
     const getTitle = computed(() => store.getters['settings/getTitle'])
     const getSubtitle = computed(() => store.getters['settings/getSubtitle'])
 
